@@ -7,6 +7,11 @@ fun calculateCommission(cardType: String = "Мир", totalPreviousTransfers: Dou
     val visaCommissionRate = 0.0075
     val visaCommissionMin = 35.0
 
+    val remainingMonthlyLimit = when (cardType) {
+        "Mastercard" -> mastercardMonthlyLimit - totalPreviousTransfers
+        else -> Double.POSITIVE_INFINITY
+    }
+
     if (transferAmount > dailyLimit) {
         println("Превышен дневной лимит на переводы")
         return 0.0
@@ -19,7 +24,6 @@ fun calculateCommission(cardType: String = "Мир", totalPreviousTransfers: Dou
 
     return when (cardType) {
         "Mastercard" -> {
-            val remainingMonthlyLimit = mastercardMonthlyLimit - totalPreviousTransfers
             if (remainingMonthlyLimit <= 0) {
                 transferAmount * mastercardCommissionLimit + mastercardCommissionFixed
             } else {
