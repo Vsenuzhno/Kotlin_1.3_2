@@ -91,7 +91,6 @@ class CommissionTest {
         val commission = calculateCommission("Mastercard", 75000.0, 100000.0)
         assertEquals(620.0, commission)
     }
-
     @Test
     fun `test Visa commission below minimum`() {
         val commission = calculateCommission("Visa", 0.0, 10.0)
