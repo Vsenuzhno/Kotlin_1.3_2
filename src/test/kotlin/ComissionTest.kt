@@ -16,6 +16,19 @@ class CommissionTest {
     }
 
     @Test
+    fun testMastercardCommissionMonthlyLimitNotExceeded() {
+        val commission = calculateCommission("Mastercard", 0.0, 10000.0)
+        assertEquals(0.0, commission)
+    }
+
+    @Test
+    fun testMastercardCommissionMonthlyLimitExceededButRemainingAmountLessThanLimit() {
+        val commission = calculateCommission("Mastercard", 70000.0, 5000.0)
+        assertEquals(0.0, commission)
+    }
+
+
+    @Test
     fun testInvalidCardType() {
         val commission = calculateCommission("AmericanExpress", 50000.0, 100000.0)
         assertEquals(0.0, commission)
@@ -26,6 +39,7 @@ class CommissionTest {
         val commission = calculateCommission("Mastercard", 50000.0, 200000.0)
         assertEquals(0.0, commission)
     }
+
 
     @Test
     fun testExceedsMonthlyLimit() {
@@ -50,6 +64,7 @@ class CommissionTest {
         val commission = calculateCommission("Mastercard", 75000.0, 100000.0)
         assertEquals(620.0, commission)
     }
+
     @Test
     fun `test exceeding daily limit`() {
         val commission = calculateCommission("Мир", 0.0, 200000.0)
@@ -79,6 +94,7 @@ class CommissionTest {
         val commission = calculateCommission("Unknown", 0.0, 100000.0)
         assertEquals(0.0, commission)
     }
+
     @Test
     fun testMastercardCommissionWithNegativeRemainingMonthlyLimit() {
         val commission = calculateCommission("Mastercard", 150000.0, 200000.0)
@@ -91,12 +107,12 @@ class CommissionTest {
         val commission = calculateCommission("Mastercard", 75000.0, 100000.0)
         assertEquals(620.0, commission)
     }
+
     @Test
     fun `test Visa commission below minimum`() {
         val commission = calculateCommission("Visa", 0.0, 10.0)
         assertEquals(35.0, commission)
     }
-
 
 
     @Test
@@ -112,7 +128,6 @@ class CommissionTest {
     }
 
 
-
     @Test
     fun `test transfer amount above daily limit`() {
         val commission = calculateCommission("Mastercard", 10000.0, 150100.0)
@@ -120,10 +135,16 @@ class CommissionTest {
     }
 
 
-
     @Test
     fun `test transfer amount above monthly limit`() {
         val commission = calculateCommission("Mastercard", 500000.0, 150000.0)
         assertEquals(0.0, commission)
     }
+
+    @Test
+    fun testDailyLimitExceeded() {
+        val commission = calculateCommission("Mastercard", 0.0, 150001.0)
+        assertEquals(0.0, commission)
+    }
+
 }

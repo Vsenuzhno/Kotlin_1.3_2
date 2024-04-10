@@ -1,4 +1,8 @@
-fun calculateCommission(cardType: String = "Мир", totalPreviousTransfers: Double = 0.0, transferAmount: Double): Double {
+fun calculateCommission(
+    cardType: String = "Мир",
+    totalPreviousTransfers: Double = 0.0,
+    transferAmount: Double
+): Double {
     val dailyLimit = 150000.0
     val monthlyLimit = 600000.0
     val mastercardMonthlyLimit = 75000.0
@@ -35,10 +39,12 @@ fun calculateCommission(cardType: String = "Мир", totalPreviousTransfers: Dou
                 }
             }
         }
+
         "Visa" -> {
             val visaCommissionAmount = transferAmount * visaCommissionRate
             visaCommissionAmount.coerceAtLeast(visaCommissionMin)
         }
+
         "Мир" -> 0.0
         else -> {
             println("Неверный тип карты")
