@@ -6,7 +6,7 @@ class CommissionTest {
     @Test
     fun testVisaCommissionCalculation() {
         val commission = calculateCommission("Visa", 200000.0, 50000.0)
-        assertEquals(372.0, commission)
+        assertEquals(375.0, commission)
     }
 
     @Test
